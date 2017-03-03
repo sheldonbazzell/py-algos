@@ -102,18 +102,16 @@ class BTNode(object):
 		return left + 1 if left > right else right + 1
 
 
-	def is_balanced(self):
-		if self.leftChild:
-			if not self.rightChild:
-				if self.leftChild.leftChild or self.leftChild.rightChild:
-					return False
-			return self.leftChild.is_balanced()
-		if self.rightChild:
-			if not self.leftChild:
-				if self.leftChild.leftChild or self.leftChild.rightChild:
-					return False
-			return self.rightChild.is_balanced()
-		return True
+	def is_balanced(self, node):
+		if not node:
+			return True
+		left = self.get_height(node.leftChild)
+		right = self.get_height(node.rightChild)
+		if abs(left - right) <= 1 \
+		and self.is_balanced(node.leftChild) \
+		and self.is_balanced(node.rightChild):
+			return True
+		return False
 
 
 
@@ -137,8 +135,7 @@ class BinaryTree(object):
 
 
 myBT = BinaryTree()
-myBT.add(5).add(3).add(2).add(4).add(7).add(6).add(9)
+myBT.add(5).add(4).add(3).add(6).add(7).add(8).add(2).add(9)
 # myBT.root.remove(2, None)g
 # myBT.root.in_order_traversal()
-# print myBT.root.is_balanced()
-print myBT.__doc__
+print myBT.root.is_balanced(myBT.root)
