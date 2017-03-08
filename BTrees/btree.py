@@ -67,7 +67,7 @@ class BTNode(object):
 				return False
 
 
-	def remove(self, target, parent):
+	def remove(self, target, parent=None):
 		if target < self.data:
 			if self.leftChild:
 				return self.leftChild.remove(target, self)
@@ -84,9 +84,9 @@ class BTNode(object):
 				self.rightChild.remove(self.data, self)
 			elif parent.rightChild == self:
 				if self.leftChild:
-					parent.leftChild = self.leftChild
+					parent.rightChild = self.leftChild
 				else:
-					parent.leftChild = self.rightChild
+					parent.rightChild = self.rightChild
 			elif parent.leftChild == self:
 				if self.leftChild:
 					parent.leftChild = self.leftChild
@@ -134,8 +134,27 @@ class BinaryTree(object):
 		return self
 
 
+def array_to_BST(arr):
+	bt = BinaryTree()
+	if len(arr) == 0:
+		return None
+	root = array_to_BST_helper(arr, 0, len(arr) - 1)
+	return root
+
+def array_to_BST_helper(arr, start, end):
+	if start > end:
+		return None
+	mid = (start + end) // 2
+	node = BTNode(arr[mid])
+	node.leftChild = array_to_BST_helper(arr, start, mid - 1)
+	node.rightChild = array_to_BST_helper(arr, mid + 1, end)
+	return node
+ 
+
+
 myBT = BinaryTree()
-myBT.add(5).add(4).add(3).add(6).add(7).add(8).add(2).add(9)
-# myBT.root.remove(2, None)g
-# myBT.root.in_order_traversal()
-print myBT.root.is_balanced(myBT.root)
+myBT.add(5).add(3).add(2).add(8).add(7)
+myBT.root.remove(7)
+myBT.root.in_order_traversal()
+# print myBT.root.is_balanced(myBT.root)
+# print array_to_BST([1,2,3,4,5])
