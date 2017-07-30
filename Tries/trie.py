@@ -5,11 +5,11 @@ class TrieNode(object):
 		self.next = {}
 		self.end = False
 
+		
 	def __repr__(self):
 		return "data: {}, end: {}, next: {}\n".format(self.data, self.end, self.next)
 
 class Trie(object):
-
 
 	def __init__(self):
 		self.root = {}
